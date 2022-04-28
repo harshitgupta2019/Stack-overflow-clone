@@ -10,18 +10,28 @@ const TaggedQuestion = () => {
   const location = useLocation();
   const user = 1;
   const navigate = useNavigate();
-   const q=questionsList.data.map((question) =>
-   question.questionTags
-     .filter((q) => q === tag));
+  //  const q=questionsList.data.map((question) =>
+  //  question.questionTags
+  //    .filter((q) => q === tag));
   // q=questionsList.data.map((question) =>question.questionTags.filter((q) => q === tag));
   const checkAuth = () => {
     if (user === null) {
+      console.log(questionsList);
       alert("login or signup to ask a question");
       navigate('/Auth');
     } else {
       navigate('/AskQuestion');
     }
   };
+  let c=0;
+  for(let i=0;i<questionsList.data.length;i++)
+  {
+    for(let j=0;j<questionsList.data[i].questionTags.length;j++)
+    {
+        if(questionsList.data[i].questionTags[j]===tag)
+        c++;
+    }
+  }
   // console.log(questionsList) 
   return (
     <div className="main-bar">
@@ -33,21 +43,19 @@ const TaggedQuestion = () => {
         </button>
       </div>
       <div>
-        {/* <p>{count} questions</p> */}
+        <p>{c} questions</p>
         
           {
            
-
           questionsList.data.map((question) =>
             question.questionTags
               .filter((q) => q === tag)
                .map(() => (
-
+                  
                  <Questions question={question} />
                   
-             ))
-           
-          )
+             ))     
+          )  
          }
       </div>
     </div>
